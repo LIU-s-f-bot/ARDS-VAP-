@@ -91,7 +91,7 @@ training_feature_columns = X_train.columns.tolist()
 # --- Streamlit App Interface ---
 
 st.markdown(
-    "<h1 style='text-align: center;'>基于支持向量机的急性呼吸君迫综合（ARDS）患者呼吸机相关肺炎（VAP）的早期预测模型</h1>",
+    "<h1 style='text-align: center;'>基于支持向量机的急性呼吸窘迫综合征（ARDS）患者<br>呼吸机相关肺炎（VAP）的早期预测模型</h1>",
     unsafe_allow_html=True)
 
 # --- 1. User Input for X values ---
@@ -155,9 +155,8 @@ if st.button("ARDS患者发生VAP的概率"):
 # --- Disclaimer Section at the Bottom ---
 st.markdown("---")
 disclaimer_text = """
-**Disclaimer:**
+**补充说明:**
 
-Supplement:
 *   性别，0代表女性，1代表男性。
 *   机械通气第一天的吸氧浓度，若70%，则填写为0.7。
 *   D-二聚体为确诊ARDS当天的最高值。
