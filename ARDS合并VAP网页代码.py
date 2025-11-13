@@ -26,7 +26,7 @@ except FileNotFoundError:
     st.stop()
 df.rename(columns={"DDimer": "D-二聚体（mg/L）",
                    "Control Ventilation": "控制通气模式时间（天）",
-                   "FiO2_D1": "机械通气第一天的吸氧浓度",
+                   "FiO2_D1": "机械通气第一天的吸氧浓度（e.g.,0.7）",
                    "Sedation time": "镇静时间（小时）",
                    "Analgesic time": "镇痛时间（小时）",
                    "duration of mechanical ventilation": "机械通气时间（天）",
@@ -36,7 +36,7 @@ df.rename(columns={"DDimer": "D-二聚体（mg/L）",
 continuous_vars = [
     'D-二聚体（mg/L）',
     '控制通气模式时间（天）',
-    '机械通气第一天的吸氧浓度',
+    '机械通气第一天的吸氧浓度（e.g.,0.7）',
     '镇静时间（小时）',
     '镇痛时间（小时）',
     '机械通气时间（天）']
