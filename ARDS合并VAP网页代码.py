@@ -117,7 +117,7 @@ for i, var in enumerate(all_vars):
 # --- 3. Prediction Button and Logic ---
 if st.button("ARDS患者发生VAP的概率"):
     if not input_valid:
-        st.error("error, please check all X is inputed")
+        st.error("请完善患者信息！")
     else:
         try:
             # 创建输入数据的DataFrame
@@ -131,7 +131,7 @@ if st.button("ARDS患者发生VAP的概率"):
             input_processed_df = input_processed_df[training_feature_columns]
 
             # 训练模型
-            model = SVC(random_state=random_seed, kernel='linear', probability=True, C=10, gamma=0.01,
+            model = SVC(random_state=999, kernel='linear', probability=True, C=10, gamma=0.01,
                         class_weight='balanced')
             model.fit(X_train, y_train)
             st.success("Model trained successfully with fixed parameters!")
