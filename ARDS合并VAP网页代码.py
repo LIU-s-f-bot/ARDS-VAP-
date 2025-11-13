@@ -140,8 +140,8 @@ if st.button("ARDS患者发生VAP的概率"):
             prediction_proba = model.predict_proba(input_processed_df)[0]
 
             # 显示结果
-            st.header("Prediction Result")
-            prob_label = "Mortality probability of ARDS"
+            st.header("预测结果")
+            prob_label = "ARDS合并VAP的概率"
             st.metric(label=prob_label, value=f"{prediction_proba[1] * 100:.2f}%")
 
         except Exception as e:
