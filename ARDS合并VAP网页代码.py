@@ -41,11 +41,11 @@ continuous_vars = [
     '机械通气时间（天）']
 
 # Combine all variables for unified input
-all_vars = continuous_vars + categorical_vars
+all_vars = continuous_vars 
 # 预处理管道，对分类变量进行OneHotEncoder（不删除任何列）
 preprocessor = ColumnTransformer(
     transformers=[
-        ('num', StandardScaler(), continuous_vars),
+        ('num', StandardScaler(), continuous_vars)
 
         # 这里不再传递selected_categorical_vars，而是使用categorical_vars，并且OneHotEncoder不传递参数
     ])
@@ -54,8 +54,8 @@ preprocessor = ColumnTransformer(
 X_processed = preprocessor.fit_transform(df)
 
 # 获取特征名
-try:
-    feature_names =continuous_vars
+
+feature_names =continuous_vars
 
 X_processed_df = pd.DataFrame(X_processed, columns=feature_names)
 
