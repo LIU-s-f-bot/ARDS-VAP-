@@ -20,36 +20,33 @@ st.set_page_config(layout="wide")
 # Load data
 # Note: Ensure '12交集特征.xlsx' is in the same directory or provide the full path
 try:
-    df = pd.read_excel('构建模型222.xlsx')
+    df = pd.read_excel('lasso纳入.xlsx')
 except FileNotFoundError:
     st.error("Error, file not found")
     st.stop()
-df.rename(columns={"DDimer": "D-二聚体（mg/L）",
+df.rename(columns={
                    "Control Ventilation": "控制通气模式时间（天）",
                    "FiO2_D1": "机械通气第一天的吸氧浓度（e.g.,0.7）",
                    "Sedation time": "镇静时间（小时）",
-                   "Analgesic time": "镇痛时间（小时）",
                    "duration of mechanical ventilation": "机械通气时间（天）",
-                   "SEX": "性别"}, inplace=True)
+                   "FiO2_D2": "机械通气第二天的吸氧浓度（e.g.,0.7）",
+                   }, inplace=True)
 # 删除rename
 # Define variables
 continuous_vars = [
-    'D-二聚体（mg/L）',
     '控制通气模式时间（天）',
     '机械通气第一天的吸氧浓度（e.g.,0.7）',
+    '机械通气第二天的吸氧浓度（e.g.,0.7）',
     '镇静时间（小时）',
-    '镇痛时间（小时）',
     '机械通气时间（天）']
-categorical_vars = [
-    '性别',  # 使用重命名后的列名
-]
+
 # Combine all variables for unified input
 all_vars = continuous_vars + categorical_vars
 # 预处理管道，对分类变量进行OneHotEncoder（不删除任何列）
 preprocessor = ColumnTransformer(
     transformers=[
         ('num', StandardScaler(), continuous_vars),
-        ('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), categorical_vars)
+
         # 这里不再传递selected_categorical_vars，而是使用categorical_vars，并且OneHotEncoder不传递参数
     ])
 
@@ -58,15 +55,7 @@ X_processed = preprocessor.fit_transform(df)
 
 # 获取特征名
 try:
-    feature_names = (
-            continuous_vars +
-            list(preprocessor.named_transformers_['cat'].get_feature_names_out(categorical_vars))
-    )
-except AttributeError:
-    feature_names = (
-            continuous_vars +
-            list(preprocessor.named_transformers_['cat'].get_feature_names(categorical_vars))
-    )
+    feature_names =continuous_vars
 
 X_processed_df = pd.DataFrame(X_processed, columns=feature_names)
 
@@ -155,10 +144,7 @@ if st.button("ARDS患者发生VAP的概率"):
 # --- Disclaimer Section at the Bottom ---
 st.markdown("---")
 disclaimer_text = """
-**补充说明:**
-
-*   性别，0代表女性，1代表男性。
+**补充说明:**  
 *   机械通气第一天的吸氧浓度，若70%，则填写为0.7。
-*   D-二聚体为确诊ARDS当天的最高值。
 """
 st.markdown(disclaimer_text)
